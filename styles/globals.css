@@ -40,3 +40,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.react-multi-carousel-item {
+  width: 250px !important;
+}

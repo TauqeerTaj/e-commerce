@@ -1,0 +1,14 @@
+#menuAppbar ul {
+  background-image: url("../assests/setting-menu.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+}
+.notifiImages img {
+  margin: 0px 10px 0px 10px;
+  cursor: pointer;
+}
+.notifiImages img:first-child {
+  margin-left: 20px;
+  margin-right: 5px;
+}

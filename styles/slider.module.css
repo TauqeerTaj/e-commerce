@@ -1,0 +1,37 @@
+.productHeading {
+  font-weight: 700;
+  margin-top: 15px;
+}
+.productPrice {
+  margin-top: 10px;
+  color: #db4444;
+}
+.productPrice s {
+  color: #7d8184;
+}
+.productRating {
+  margin-top: 10px;
+}
+.discountOffer {
+  background-color: #db4444;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.productIcon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.productIcon img {
+  background-color: #fff;
+  border-radius: 100%;
+  object-fit: none;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
