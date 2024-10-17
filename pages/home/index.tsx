@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import ListCategory from "@/components/categories/ListCategory";
 import CarouselComponent from "@/components/CarouselComponent";
 import FlashSale from "@/components/FlashSale";
-import Slider from "@/components/ImageSlider";
+import SliderComponent from "@/components/ImageSlider";
 
 const Home = () => {
   return (
@@ -21,7 +21,7 @@ const Home = () => {
             <FlashSale />
           </Grid>
           <Grid size={12} sx={{ mt: 2 }}>
-            <Slider />
+            <SliderComponent />
           </Grid>
         </Grid>
       </Box>

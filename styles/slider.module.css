@@ -10,6 +10,7 @@
   color: #7d8184;
 }
 .productRating {
+  display: flex;
   margin-top: 10px;
 }
 .discountOffer {
@@ -34,4 +35,10 @@
   object-fit: none;
   margin-bottom: 10px;
   cursor: pointer;
+}
+.productItem {
+  padding: 0px 20px 0px 0px;
+}
+.mainSlider .slick-arrow {
+  background: red !important;
 }
