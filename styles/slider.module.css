@@ -1,10 +1,12 @@
 .productHeading {
   font-weight: 700;
   margin-top: 15px;
+  text-align: left;
 }
 .productPrice {
   margin-top: 10px;
   color: #db4444;
+  text-align: left;
 }
 .productPrice s {
   color: #7d8184;
@@ -39,6 +41,31 @@
 .productItem {
   padding: 0px 20px 0px 0px;
 }
-.mainSlider .slick-arrow {
-  background: red !important;
+.productItem:hover{
+  .addToCart{
+    display: block;
+  }
+}
+.addToCart{
+  display: none;
+  background-color: #000;
+  color:#fff;
+  width: 100%;
+  padding:10px;
+  position:absolute;
+  bottom:0;
+  text-align: center;
+  cursor: pointer;
+}
+.viewButton{
+  background-color: #db4444;
+  color:#fff;
+  width:200px;
+  margin-top: 40px;
+}
+/*Category Slider*/
+.categoryBox:hover{
+  background-color: #db4444;
+  color:#fff;
+  cursor: pointer;
 }

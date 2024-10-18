@@ -1,7 +1,9 @@
 import { Typography, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+//Interface
+import { SliderHeaderType } from "@/constant/sliderHeaderInterface";
 
-export default function FlashSale() {
+ const SliderHeader: React.FC<SliderHeaderType> = ({identity, heading}) => {
   return (
     <>
       <Box>
@@ -19,8 +21,7 @@ export default function FlashSale() {
                 }}
               ></Typography>
               <Typography color="#DB4444" fontWeight="bold">
-                {" "}
-                Today&apos;s
+                {identity}
               </Typography>
             </Box>
           </Grid>
@@ -28,7 +29,7 @@ export default function FlashSale() {
             <Grid container spacing={2}>
               <Grid size={3}>
                 <Typography variant="h5" fontWeight="bold">
-                  Flash Sales
+                  {heading}
                 </Typography>
               </Grid>
             </Grid>
@@ -38,3 +39,4 @@ export default function FlashSale() {
     </>
   );
 }
+export default SliderHeader
