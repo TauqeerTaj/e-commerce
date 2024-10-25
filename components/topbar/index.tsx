@@ -11,7 +11,13 @@ export default function Topbar() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "14px",
+        fontSize: {
+          xs: '9px',
+          sm: '14px',
+          md: '14px',
+          lg: '14px',
+          xl: '14px'
+        },
         fontFamily: "Poppins, sans-serif",
       }}
     >

@@ -27,7 +27,7 @@ import { SliderHeaderType } from "@/constant/sliderHeaderInterface";
           </Grid>
           <Grid size={12}>
             <Grid container spacing={2}>
-              <Grid size={3}>
+              <Grid size={{xs:12, sm: 12, md: 3, lg: 3, xl:3}} sx={{pb: 3}}>
                 <Typography variant="h5" fontWeight="bold">
                   {heading}
                 </Typography>

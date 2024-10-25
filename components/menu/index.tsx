@@ -15,6 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Image from "next/image";
+import Link from "next/link";
 //Images
 import OrderImg from "@/assests/order.png";
 import UserImg from "@/assests/user.png";
@@ -25,10 +26,30 @@ import Heart from "@/assests/heart.png";
 import Cart from "@/assests/cart.png";
 import Search from "@/assests/search.png";
 import User from "@/assests/user-1.png";
+//Icons
+import { IoMdMenu } from "react-icons/io";
 //Styles
 import Styles from "@/styles/menu.module.css";
 
-const pages = ["Home", "Contact", "About", "Signup"];
+
+const pages = [
+  {
+    page: "Home",
+    path: "/home"
+  },
+  {
+    page: "Contact",
+    path: "/contact"
+  },
+  {
+    page: "About",
+    path: "/about"
+  },
+  {
+    page: "Signup",
+    path: "/"
+  },
+];
 const settings = [
   {
     icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
@@ -112,7 +133,7 @@ function AccountMenu() {
             sx={{
               flexGrow: 1,
               display: { xs: "flex", md: "flex" },
-              justifyContent: "center",
+              justifyContent: "flex-start",
             }}
           >
             <IconButton
@@ -121,11 +142,13 @@ function AccountMenu() {
               aria-controls="menuAppbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{
+                display: { xs: "flex", md: "none", lg: 'none', xl: 'none' },
+              }}
             >
-              {/* <MenuIcon /> */}
+              <IoMdMenu />
             </IconButton>
-            <Menu
+            <Menu 
               id={Styles.menuAppbar}
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -143,7 +166,7 @@ function AccountMenu() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  key={page}
+                  key={page.page}
                   onClick={handleCloseNavMenu}
                   sx={{
                     fontFamily: "Poppins, sans-serif",
@@ -155,13 +178,13 @@ function AccountMenu() {
                       fontFamily: "Poppins, sans-serif",
                     }}
                   >
-                    {page}
+                    <Link href={page.path}>{page.page}</Link>
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -178,11 +201,11 @@ function AccountMenu() {
             }}
           >
             LOGO
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.page}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
@@ -192,8 +215,9 @@ function AccountMenu() {
                   fontFamily: "Poppins, sans-serif",
                   textTransform: "capitalize",
                 }}
+                href={page.path}
               >
-                {page}
+                {page.page}
               </Button>
             ))}
           </Box>
@@ -203,6 +227,7 @@ function AccountMenu() {
                 size="small"
                 variant="outlined"
                 placeholder="What are you looking for?"
+                className="searchInput"
                 // onChange={handleChange}
                 InputProps={{
                   endAdornment: (

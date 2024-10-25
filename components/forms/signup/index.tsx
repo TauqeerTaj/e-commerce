@@ -12,14 +12,17 @@ import Button from "@mui/material/Button";
 import { FormControl } from "@mui/material";
 //Images
 import GoogleImage from "@/assests/google.png";
+//Styles
+import Styles from '@/styles/authForm.module.css'
 
 const SignupForm = () => {
   const router = useRouter();
   return (
     <>
-      <Box textAlign="center" component="form">
-        <FormControl sx={{ translate: "0px 90px" }}>
+      <Box textAlign="center" >
+        <FormControl component="form" className={Styles.form} sx={{md: { translate: "0px 90px" }, lg: { translate: "0px 90px" }, xl: { translate: "0px 90px" }}}>
           <Typography
+            className={Styles.heading}
             variant="h4"
             style={{ textAlign: "left", marginBottom: 10 }}
           >
@@ -44,6 +47,7 @@ const SignupForm = () => {
               color="error"
               sx={{ textTransform: "capitalize", p: 2 }}
               style={{ marginTop: 40 }}
+              type='submit'
               onClick={() => router.push("/login")}
             >
               Create Account

@@ -12,7 +12,7 @@ const Login = () => {
     <>
       <Box component="section" className={Styles.signup}>
         <Grid container spacing={2}>
-          <Grid size={6}>
+          <Grid size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}}>
             <Box>
               {" "}
               <Image
@@ -22,7 +22,7 @@ const Login = () => {
               />
             </Box>
           </Grid>
-          <Grid size={6}>
+          <Grid size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}}>
             <LoginForm />
           </Grid>
         </Grid>

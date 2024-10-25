@@ -3,6 +3,8 @@ import Rating from "@/assests/rating.png";
 import Heart from "@/assests/heart.png";
 import View from "@/assests/view.png";
 import Image1 from "@/assests/slider-img/game-controller.png";
+import Coat from "@/assests/slider-img/coat.png";
+
 //category-slider-images
 import Phone from "@/assests/category-slider-img/Category-CellPhone.png"
 import Computer from "@/assests/category-slider-img/Category-Computer.png"
@@ -11,7 +13,13 @@ import Camera from "@/assests/category-slider-img/Category-Camera.png"
 import HeadPhone from "@/assests/category-slider-img/Category-Headphone.png"
 import Gaming from "@/assests/category-slider-img/Category-Gamepad.png"
 
-export const sliderCard = [
+export const sliderCard = {
+  setting: {
+    arrows: true,
+    button: 'large',
+    rows: 'single'
+  },
+  content: [
     {
       image: Image1,
       discount:'-40%',
@@ -63,6 +71,8 @@ export const sliderCard = [
       priceOff:<s>$160</s>
     },
   ]
+}
+
 
   export const sliderCategoryCard = [
     {
@@ -90,3 +100,122 @@ export const sliderCard = [
         productHeading:"Gaming",
       },
   ]
+
+  export const bestSellingCard = {
+    setting: {
+      arrows: false,
+      button: 'small',
+      rows: 'single'
+    },
+    content: [
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+    ]
+  }
+  export const ourProducts = {
+    setting: {
+      arrows: true,
+      button: 'large',
+      rows: 'double'
+    },
+    content: [
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+      {
+        image: Coat,
+        discount:'',
+        favouriteIcon:Heart,
+        viewIcon:View,
+        rating:Rating,
+        productHeading:"The north coat",
+        productPrice:"$260",
+        priceOff:<s>$360</s>
+      },
+    ]
+  }

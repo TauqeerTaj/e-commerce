@@ -9,14 +9,17 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
+//Styles
+import Styles from '@/styles/authForm.module.css'
 
 const LoginForm = () => {
   const router = useRouter();
   return (
     <>
       <Box textAlign="center" component="form">
-        <FormControl sx={{ translate: "0px 150px" }}>
+        <FormControl className={Styles.form} sx={{md: { translate: "0px 150px" }, lg: { translate: "0px 150px" }, xl: { translate: "0px 150px" }}}>
           <Typography
+          className={Styles.heading}
             variant="h4"
             style={{ textAlign: "left", marginBottom: 10 }}
           >

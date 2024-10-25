@@ -45,6 +45,10 @@ a {
   width: 250px !important;
 }
 
+.searchInput input::placeholder{
+  font-size: 14px;
+}
+
 .slick-arrow {
   position:absolute!important;
   top:-50px!important;

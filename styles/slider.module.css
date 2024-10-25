@@ -1,3 +1,6 @@
+.mainSlider {
+  position: relative;
+}
 .productHeading {
   font-weight: 700;
   margin-top: 15px;
@@ -62,6 +65,17 @@
   color:#fff;
   width:200px;
   margin-top: 40px;
+  text-transform: capitalize;
+}
+.viewButtonSmall{
+  background-color: #db4444;
+  color:#fff;
+  width:120px;
+  margin-top: 40px;
+  text-transform: capitalize;
+  position: absolute;
+  top: -80px;
+  right: 45px;
 }
 /*Category Slider*/
 .categoryBox:hover{

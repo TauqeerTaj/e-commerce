@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React,{useState} from "react";
+import { useMediaQuery } from 'react-responsive';
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
+import { Button } from "@mui/material";
 //List category
 import { listCategory } from "@/constant";
 //Icons
@@ -15,6 +17,9 @@ import Styles from "@/styles/category.module.css";
 const ListCategory = () => {
   const [listItem, setListItem] = React.useState("");
   const [open, setOpen] = React.useState(false);
+  const [showCategory, setShowCategory] = useState(false)
+
+  const isMobile = useMediaQuery({ query: '(max-width: 600px)' });
 
   const handleClick = (category: string) => {
     setListItem(category);
@@ -24,10 +29,16 @@ const ListCategory = () => {
       setOpen(true);
     }
   };
+  const handleShowCategories  = () => {
+    setShowCategory(!showCategory)
+  }
 
   return (
     <>
-      <List component="nav" sx={{ pt: 5 }} className={Styles.nav}>
+      <Button sx={{textTransform: 'capitalize'}} className={Styles.openNav} onClick={()=> handleShowCategories()}>{showCategory ? 'Close Categories' : 'Open Categories'}</Button>
+      {
+        (showCategory  || !isMobile) &&
+        <List component="nav" sx={{ pt: 5 }} className={Styles.nav}>
         {listCategory.map((item) => (
           <>
             <ListItemButton onClick={() => handleClick(item.text)}>
@@ -56,6 +67,7 @@ const ListCategory = () => {
           </>
         ))}
       </List>
+      }
     </>
   );
 };

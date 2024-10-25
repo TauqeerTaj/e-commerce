@@ -1,6 +1,11 @@
 import { ReactNode } from "react"
 
 export interface SliderContentList {
+    setting: {
+        arrows: boolean,
+        button: string,
+        rows: string
+    }
     sliderCard: SliderTypes[]
 } 
 

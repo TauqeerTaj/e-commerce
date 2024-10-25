@@ -27,7 +27,7 @@ const Footer = () => {
       className={Styles.footer}
     >
       <Grid container spacing={3}>
-        <Grid size={3}>
+        <Grid size={{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}}>
           <Typography
             style={{
               color: "#fff",
@@ -84,7 +84,7 @@ const Footer = () => {
             </Typography>
           </Stack>
         </Grid>
-        <Grid size={2}>
+        <Grid size={{xs: 12, sm: 12, md: 2, lg: 2, xl: 2}}>
           <Typography
             style={{
               color: "#fff",
@@ -106,7 +106,7 @@ const Footer = () => {
             <Typography style={{ color: "#fff" }}>+88015-88888-9999</Typography>
           </Stack>
         </Grid>
-        <Grid size={2}>
+        <Grid size={{xs: 12, sm: 12, md: 2, lg: 2, xl: 2}}>
           <Typography
             style={{
               color: "#fff",
@@ -134,7 +134,7 @@ const Footer = () => {
             <Typography style={{ color: "#fff" }}>Shop</Typography>
           </Stack>
         </Grid>
-        <Grid size={2}>
+        <Grid size={{xs: 12, sm: 12, md: 2, lg: 2, xl: 2}}>
           <Typography
             style={{
               color: "#fff",
@@ -159,7 +159,7 @@ const Footer = () => {
             <Typography style={{ color: "#fff" }}>Contact</Typography>
           </Stack>
         </Grid>
-        <Grid size={3}>
+        <Grid size={{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}}>
           <Typography
             style={{
               color: "#fff",
