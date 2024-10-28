@@ -8,6 +8,9 @@ import BackgroundImage from "@/assests/auth-bg.png";
 import Signup from "@/components/forms/signup";
 //styles
 import Styles from "@/styles/authForm.module.css";
+//Toast
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Main() {
   return (
@@ -20,7 +23,7 @@ export default function Main() {
       </Head>
       <Box component="section" className={Styles.signup}>
         <Grid container spacing={2}>
-          <Grid size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}}>
+          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
             <Box>
               <Image
                 src={BackgroundImage}
@@ -29,10 +32,11 @@ export default function Main() {
               />
             </Box>
           </Grid>
-          <Grid size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}}>
+          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
             <Signup />
           </Grid>
         </Grid>
+        <ToastContainer />
       </Box>
     </>
   );

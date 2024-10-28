@@ -1,8 +1,18 @@
 "use client";
 
+import React from "react";
+
 import Image from "next/image";
 import Link from "next/link";
+//axios
+import axios from "axios";
+
 import { useRouter } from "next/navigation";
+// import { hash } from "bcryptjs";
+
+//Interface
+import { AuthInterface } from "@/constant/authInterface";
+
 //Material UI Imports
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -10,17 +20,94 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { FormControl } from "@mui/material";
+//Toast
+import { toast } from "react-toastify";
 //Images
 import GoogleImage from "@/assests/google.png";
+//Components
+import LoadingComponent from "@/components/LoadingBar";
 //Styles
-import Styles from '@/styles/authForm.module.css'
+import Styles from "@/styles/authForm.module.css";
+
+// import { User } from "@/models/userModel";
 
 const SignupForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  // const authSubmitHandler = async (formData: FormData) => {
+  //   "use server";
+  //   const name = formData.get("name") as string | undefined;
+  //   const email = formData.get("email") as string | undefined;
+  //   const password = formData.get("password") as string | undefined;
+
+  //   if (!email || !name || !password) {
+  //     throw new Error("Please provide all fields");
+  //   }
+
+  //   const user = await User.findOne({ email });
+
+  //   if (user) throw new Error("User already exists");
+
+  //   const hashedPassword = await hash(password, 10);
+
+  //   User.create({
+  //     name,
+  //     email,
+  //     password: hashedPassword,
+  //   });
+
+  //   redirect("/login");
+  // };
+
+  const createUser = async (userData: AuthInterface) => {
+    const data = await axios.post("api/auth/signup", userData);
+    return data;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const result = await createUser(user);
+      setLoading(false);
+      toast.success(result.data.message);
+      router.push("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errResp = error?.response?.data.message;
+        setLoading(false);
+        toast.error(errResp);
+      }
+    }
+  };
   return (
     <>
-      <Box textAlign="center" >
-        <FormControl component="form" className={Styles.form} sx={{md: { translate: "0px 90px" }, lg: { translate: "0px 90px" }, xl: { translate: "0px 90px" }}}>
+      <Box textAlign="center">
+        {loading && <LoadingComponent />}
+        <FormControl
+          component="form"
+          // action={authSubmitHandler}
+          className={Styles.form}
+          sx={{
+            md: { translate: "0px 90px" },
+            lg: { translate: "0px 90px" },
+            xl: { translate: "0px 90px" },
+          }}
+          onSubmit={submitHandler}
+        >
           <Typography
             className={Styles.heading}
             variant="h4"
@@ -35,20 +122,39 @@ const SignupForm = () => {
             Enter your details below
           </Typography>
           <Stack direction="column" spacing={2}>
-            <TextField id="name" label="Name" variant="standard" />
+            <TextField
+              id="name"
+              label="Name"
+              variant="standard"
+              name="name"
+              value={user.name}
+              onChange={handleChange}
+            />
             <TextField
               id="email"
-              label="Email or Phone Number"
+              label="Email"
+              name="email"
               variant="standard"
+              type="email"
+              value={user.email}
+              onChange={handleChange}
             />
-            <TextField id="password" label="Password" variant="standard" />
+            <TextField
+              id="password"
+              label="Password"
+              name="password"
+              variant="standard"
+              type="password"
+              value={user.password}
+              onChange={handleChange}
+            />
             <Button
               variant="contained"
               color="error"
               sx={{ textTransform: "capitalize", p: 2 }}
               style={{ marginTop: 40 }}
-              type='submit'
-              onClick={() => router.push("/login")}
+              type="submit"
+              disabled={!user.name || !user.email || !user.password}
             >
               Create Account
             </Button>
