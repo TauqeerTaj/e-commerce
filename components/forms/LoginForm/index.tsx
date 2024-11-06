@@ -1,7 +1,9 @@
 "use client";
 
+import React from 'react'
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import  {signIn} from "next-auth/react";
 //Material UI Imports
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -13,11 +15,31 @@ import FormControl from "@mui/material/FormControl";
 import Styles from '@/styles/authForm.module.css'
 
 const LoginForm = () => {
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const router = useRouter();
+  const submitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: user.email,
+        password: user.password
+      })
+      console.log('result:', result)
+    } catch (error) {
+      console.log('signIn error:', error)
+    }
+  }
   return (
     <>
-      <Box textAlign="center" component="form">
-        <FormControl className={Styles.form} sx={{md: { translate: "0px 150px" }, lg: { translate: "0px 150px" }, xl: { translate: "0px 150px" }}}>
+      <Box textAlign="center">
+        <FormControl component="form" onSubmit={submitHandler} className={Styles.form} sx={{md: { translate: "0px 150px" }, lg: { translate: "0px 150px" }, xl: { translate: "0px 150px" }}}>
           <Typography
           className={Styles.heading}
             variant="h4"
@@ -46,8 +68,9 @@ const LoginForm = () => {
               <Button
                 variant="contained"
                 color="error"
+                type='submit'
                 sx={{ textTransform: "capitalize", p: 2, width: 120 }}
-                onClick={() => router.push("/home")}
+                // onClick={() => router.push("/home")}
               >
                 Log In
               </Button>

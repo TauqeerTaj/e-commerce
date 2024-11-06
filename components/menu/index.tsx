@@ -54,22 +54,28 @@ const settings = [
   {
     icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
     text: "Manage My Account",
+    path: "/profile"
   },
   {
     icon: <Image src={OrderImg} width={25} height={25} alt="order-icon" />,
     text: "My Order",
+    path: "/profile"
   },
   {
     icon: <Image src={CancelImg} width={25} height={25} alt="cancel-icon" />,
     text: "My Cancellations",
+    path: "/profile"
   },
   {
     icon: <Image src={ReviewsImg} width={25} height={25} alt="reviews-icon" />,
     text: "My Reviews",
+    path: "/profile"
   },
+  
   {
     icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
     text: "Logout",
+    path: "/profile"
   },
 ];
 
@@ -268,9 +274,10 @@ function AccountMenu() {
                   <Typography style={{ marginRight: 10 }}>
                     {setting.icon}
                   </Typography>
+                  <Link href={setting?.path}>
                   <Typography sx={{ textAlign: "center" }}>
                     {setting.text}
-                  </Typography>
+                  </Typography></Link>
                 </MenuItem>
               ))}
             </Menu>

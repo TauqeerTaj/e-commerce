@@ -21,7 +21,7 @@ const handler = async (req: Request, res: Response) => {
 
   const db = client.db();
 
-  const hashedPassword = hashPassword(password);
+  const hashedPassword = await hashPassword(password);
 
   const findUser = await db.collection("users").findOne({
     email,
@@ -38,6 +38,7 @@ const handler = async (req: Request, res: Response) => {
       password: hashedPassword,
     });
     res.status(201).json({ message: "User created successfully!", result });
+    client.close();
   }
 };
 export default handler;

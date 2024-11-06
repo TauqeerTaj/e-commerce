@@ -37,3 +37,39 @@ export const listCategory: CategoryItem[] = [
     text: "Health & Beauty",
   },
 ];
+export const profileSidebarList = [
+  {
+    text: 'Manage My Account',
+    subText: [
+      {
+        text: 'My Profile',
+        path: '/home'
+      },
+      {
+        text: 'Address Book',
+        path: '/home'
+      },
+      {
+        text: 'My Payment Options',
+        path: '/home'
+      }
+    ]
+  },
+  {
+    text: 'Manage Orders',
+    subText: [
+      {
+        text: 'My Returns',
+        path: '/home'
+      },
+      {
+        text: 'My Cancellations',
+        path: '/home'
+      },
+      
+    ]
+  },
+  {
+    text: 'My WhishList',
+  }
+]
