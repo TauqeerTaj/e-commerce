@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useRouter } from 'next/router';
+import { SessionProvider } from "next-auth/react"; 
 //Fontawesome
 import "@/constant/fontawsome";
 //components
@@ -14,11 +15,12 @@ export default function App({ Component, pageProps }: AppProps) {
   console.log('path:', pathname)
   return (
     <>
-      
-      {(pathname !== '/' && pathname !== '/login') && 
-      <><Topbar /><Header /></>}
+    <SessionProvider session={pageProps.session}>
+      <Topbar />
+      <Header />
       <Component {...pageProps} />
-      {(pathname !== '/' && pathname !== '/login') && <Footer />}
+      <Footer />
+    </SessionProvider>
     </>
   );
 }

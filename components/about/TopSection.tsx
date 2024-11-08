@@ -25,7 +25,7 @@ function TopSection() {
             </Typography>
         </Grid>
         <Grid size={6}>
-            <Image src={bannerImage} alt="banner" style={{width:'-webkit-fill-available'}}/>
+            <Image src={bannerImage} alt="banner" style={{width:'-webkit-fill-available', height: '450px'}}/>
         </Grid>
         </Grid>
         </>

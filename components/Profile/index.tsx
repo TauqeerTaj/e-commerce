@@ -1,9 +1,12 @@
 import {Box, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useSession } from "next-auth/react";
 //Components
 import BreadCrumbs from "../common/breadCrumb"
 
 const ProfileComponent: React.FC = () =>  {
+    
+    const {data: session} = useSession()
 
     return (
         <>
@@ -22,7 +25,7 @@ const ProfileComponent: React.FC = () =>  {
                     ]} />
                 </Grid>
                 <Grid size={6} py={5} display={"flex"} justifyContent={"end"} alignItems={"center"}>
-                    welcome <Typography color="#DB4444">Tauqeer!</Typography>
+                    welcome!<Typography color="#DB4444" ml={1}>{session?.user?.name}!</Typography>
                 </Grid>
             </Grid>
         </Box>

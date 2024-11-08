@@ -12,13 +12,16 @@ export default NextAuth({
         CredentialsProvider({
             async authorize(credentials) {
                 const client = await connectToDatabase()
-                const userCollection = client.db().collections('users')
+                const userCollection = await client.db().collection('users')
                 const user = await userCollection.findOne({ email: credentials.email })
                 if (!user) throw new Error('No user found!')
                 const isValid = await verifyPassword(credentials.password, user.password)
                 if (!isValid) throw new Error('Invalid Credentials!')
-                client.close()
-                return { email: user.email }
+                return {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                }
             }
         })
     ]

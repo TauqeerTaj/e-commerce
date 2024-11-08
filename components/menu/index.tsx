@@ -16,6 +16,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
+import nookies from 'nookies';
 //Images
 import OrderImg from "@/assests/order.png";
 import UserImg from "@/assests/user.png";
@@ -75,7 +78,7 @@ const settings = [
   {
     icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
     text: "Logout",
-    path: "/profile"
+    path: "/login"
   },
 ];
 
@@ -88,6 +91,9 @@ function AccountMenu() {
   //   setShowClearIcon(event.target.value === "" ? false : true);
   // };
 
+  const router = useRouter();
+  const {status} = useSession()
+
   const handleClick = () => {
     console.log("clicked the clear icon...");
   };
@@ -95,12 +101,10 @@ function AccountMenu() {
   const handleOpenNavMenu = (
     event: React.SyntheticEvent<EventTarget>
   ): void => {
-    console.log("event check:", event);
     setAnchorElNav(event.currentTarget as never);
   };
   const handleOpenUserMenu = (event: React.SyntheticEvent<EventTarget>) => {
     setAnchorElUser(event.currentTarget as never);
-    console.log("event check:", event);
   };
 
   const handleCloseNavMenu = () => {
@@ -110,6 +114,15 @@ function AccountMenu() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = (path: string) => {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
+    document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
+    // nookies.destroy(null, 'next-auth.session-token');
+    // router.push(path);
+  }
+
 
   return (
     <AppBar position="static" sx={{ background: "#fff" }}>
@@ -173,7 +186,7 @@ function AccountMenu() {
               {pages.map((page) => (
                 <MenuItem
                   key={page.page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => handleLogout(page.path)}
                   sx={{
                     fontFamily: "Poppins, sans-serif",
                   }}
@@ -238,49 +251,52 @@ function AccountMenu() {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end" onClick={handleClick}>
-                      <Image src={Search} alt="cart" width={20} height={20} />
+                      <Image src={Search} alt="search-icon" width={20} height={20} />
                     </InputAdornment>
                   ),
                 }}
               />
             </FormControl>
-            <div className={Styles.notifiImages}>
-              <Image src={Heart} alt="favourite-icon" width={18} height={18} />
-              <Image src={Cart} alt="cart" width={20} height={20} />
-            </div>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Image src={User} alt="cart" width={20} height={20} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id={Styles.menuAppbar}
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting, i) => (
-                <MenuItem key={i} onClick={handleCloseUserMenu}>
-                  <Typography style={{ marginRight: 10 }}>
-                    {setting.icon}
-                  </Typography>
-                  <Link href={setting?.path}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting.text}
-                  </Typography></Link>
-                </MenuItem>
-              ))}
-            </Menu>
+            {
+              status === 'authenticated' &&
+              <>
+              <div className={Styles.notifiImages}>
+                <Image src={Heart} alt="favourite-icon" width={18} height={18} />
+                <Image src={Cart} alt="cart" width={20} height={20} />
+              </div><Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Image src={User} alt="cart" width={20} height={20} />
+                  </IconButton>
+                </Tooltip><Menu
+                  sx={{ mt: "45px" }}
+                  id={Styles.menuAppbar}
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting, i) => (
+                    <MenuItem key={i} onClick={handleCloseUserMenu}>
+                      <Typography style={{ marginRight: 10 }}>
+                        {setting.icon}
+                      </Typography>
+                      <Link href={setting?.path}>
+                        <Typography sx={{ textAlign: "center" }}>
+                          {setting.text}
+                        </Typography></Link>
+                    </MenuItem>
+                  ))}
+                </Menu>
+                </>
+            }
           </Box>
         </Toolbar>
       </Container>
