@@ -3,6 +3,8 @@
 import React, {useState, useEffect} from 'react'
 import { Typography, FormControl, Stack, TextField, Button, Box } from "@mui/material"
 import Grid from "@mui/material/Grid2"
+import axios from 'axios'
+import { useSession } from "next-auth/react";
 //Styles
 import Styles from '@/styles/profileSidebar.module.css'
 
@@ -18,6 +20,8 @@ function Form() {
     })
     const [passwordMatch, setPasswordMatch] = useState(false)
 
+    const {data: session} = useSession()
+
     useEffect(()=> {
         if(profileData.confirmPassword.length && profileData.confirmPassword === profileData.newPassword) {
             setPasswordMatch(false)
@@ -31,6 +35,11 @@ function Form() {
           [e.target.name]: e.target.value,
         });
       };
+    
+    const updateUser = async (userData:any) => {
+      const data = await axios.post("api/editProfile", userData);
+      return data;
+    };
 
       const submitHandler = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -39,16 +48,25 @@ function Form() {
             if(profileData.newPassword !== profileData.confirmPassword) {
                 setPasswordMatch(true)
             }
-        //   const result = await createUser(user);
-        //   setLoading(false);
-        //   toast.success(result.data.message);
-        //   router.push("/login");
+          const result = await updateUser(
+            {
+              name: profileData.name,
+              email: session?.user?.email,
+              updatedEmail: profileData.email,
+              newPassword: profileData.newPassword,
+              address: profileData.address
+            }
+          );
+          console.log("updated result:", result)
+          // setLoading(false);
+          // toast.success(result.data.message);
+          // router.push("/login");
         } catch (error) {
-        //   if (axios.isAxiosError(error)) {
-        //     const errResp = error?.response?.data.message;
-        //     setLoading(false);
-        //     toast.error(errResp);
-        //   }
+          if (axios.isAxiosError(error)) {
+            const errResp = error?.response?.data.message;
+            // setLoading(false);
+            // toast.error(errResp);
+          }
         }
       };
 

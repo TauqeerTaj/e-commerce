@@ -11,6 +11,9 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
+//Toast
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 //Components
 import LoadingComponent from '@/components/LoadingBar';
 //Styles
@@ -41,18 +44,22 @@ const LoginForm = () => {
         email: user.email,
         password: user.password
       })
+      
       console.log('result:', result)
       setLoading(false)
+      if(result?.error) toast.error(result.error);
       if(result?.ok) router.push("/home")
     } catch (error) {
       setLoading(false)
       console.log('signIn error:', error)
+      toast.success('sorry');
     }
   }
   return (
     <>
       <Box textAlign="center">
         {loading && <LoadingComponent/>}
+        <ToastContainer />
         <FormControl component="form" onSubmit={submitHandler} className={Styles.form} sx={{md: { translate: "0px 150px" }, lg: { translate: "0px 150px" }, xl: { translate: "0px 150px" }}}>
           <Typography
           className={Styles.heading}

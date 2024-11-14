@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 //Images
@@ -33,6 +33,8 @@ import User from "@/assests/user-1.png";
 import { IoMdMenu } from "react-icons/io";
 //Styles
 import Styles from "@/styles/menu.module.css";
+import { redirect } from "next/dist/server/api-utils";
+import { cookies } from "next/headers";
 
 
 const pages = [
@@ -85,6 +87,7 @@ const settings = [
 function AccountMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [menuSelected, setMenuSelected] = React.useState('')
   // const [showClearIcon, setShowClearIcon] = React.useState(false);
 
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +96,10 @@ function AccountMenu() {
 
   const router = useRouter();
   const {status} = useSession()
+  const {data: session} = useSession()
+
+  console.log("login check:", session)
+
 
   const handleClick = () => {
     console.log("clicked the clear icon...");
@@ -115,14 +122,14 @@ function AccountMenu() {
     setAnchorElUser(null);
   };
 
-  const handleLogout = (path: string) => {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
-    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
-    document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost";
-    // nookies.destroy(null, 'next-auth.session-token');
+  const handleLogout = async() => {
+    await signOut()
     // router.push(path);
   }
 
+  const selectedMenu = (menu: string) => {
+    setMenuSelected(menu)
+  }
 
   return (
     <AppBar position="static" sx={{ background: "#fff" }}>
@@ -186,7 +193,7 @@ function AccountMenu() {
               {pages.map((page) => (
                 <MenuItem
                   key={page.page}
-                  onClick={() => handleLogout(page.path)}
+                  onClick={() => handleLogout()}
                   sx={{
                     fontFamily: "Poppins, sans-serif",
                   }}
@@ -203,36 +210,24 @@ function AccountMenu() {
               ))}
             </Menu>
           </Box>
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page.page}
-                onClick={handleCloseNavMenu}
+                onClick={() => selectedMenu(page.page)}
                 sx={{
                   my: 2,
                   mx: 3,
+                  pb: 0,
                   color: "#000",
                   display: "block",
                   fontFamily: "Poppins, sans-serif",
                   textTransform: "capitalize",
+                  borderBottom: '1px solid #ccc',
+                  borderColor: menuSelected === page.page ? '#ccc' : '#fff',
+                  '&:hover': {
+                    borderColor: '#ccc'
+                  }
                 }}
                 href={page.path}
               >
@@ -258,7 +253,7 @@ function AccountMenu() {
               />
             </FormControl>
             {
-              status === 'authenticated' &&
+              session &&
               <>
               <div className={Styles.notifiImages}>
                 <Image src={Heart} alt="favourite-icon" width={18} height={18} />

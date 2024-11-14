@@ -5,8 +5,11 @@ import { connectToDatabase } from "@/lib/db";
 import { verifyPassword } from '@/lib/auth'
 
 export default NextAuth({
+    // session: {
+    //     jwt: true
+    // },
     session: {
-        jwt: true
+        strategy: "jwt",
     },
     providers: [
         CredentialsProvider({
@@ -24,5 +27,23 @@ export default NextAuth({
                 }
             }
         })
-    ]
+    ],
+    // cookies: {
+    //     sessionToken: {
+    //         name: `__Secure-next-auth.session-token`,
+    //         options: {
+    //             httpOnly: true,
+    //             secure: false, // true in production
+    //             sameSite: "lax",
+    //         },
+    //     },
+    //     csrfToken: {
+    //         name: `__Secure-next-auth.csrf-token`,
+    //         options: {
+    //             httpOnly: true,
+    //             secure: false,
+    //             sameSite: "lax",
+    //         },
+    //     },
+    // },
 })

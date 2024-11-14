@@ -29,8 +29,6 @@ import LoadingComponent from "@/components/LoadingBar";
 //Styles
 import Styles from "@/styles/authForm.module.css";
 
-// import { User } from "@/models/userModel";
-
 const SignupForm = () => {
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
@@ -39,31 +37,6 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
-
-  // const authSubmitHandler = async (formData: FormData) => {
-  //   "use server";
-  //   const name = formData.get("name") as string | undefined;
-  //   const email = formData.get("email") as string | undefined;
-  //   const password = formData.get("password") as string | undefined;
-
-  //   if (!email || !name || !password) {
-  //     throw new Error("Please provide all fields");
-  //   }
-
-  //   const user = await User.findOne({ email });
-
-  //   if (user) throw new Error("User already exists");
-
-  //   const hashedPassword = await hash(password, 10);
-
-  //   User.create({
-  //     name,
-  //     email,
-  //     password: hashedPassword,
-  //   });
-
-  //   redirect("/login");
-  // };
 
   const createUser = async (userData: AuthInterface) => {
     const data = await axios.post("api/auth/signup", userData);

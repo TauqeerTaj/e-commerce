@@ -10,7 +10,6 @@ import Styles from "@/styles/slider.module.css";
 import React from "react";
 
 const SliderComponent: React.FC<SliderContentList> = ({sliderCard, setting}) => {
-  console.log('slider card:', sliderCard)
   const settings = {
     dots: false,
     infinite: true,
