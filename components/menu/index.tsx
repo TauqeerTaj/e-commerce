@@ -17,8 +17,6 @@ import Divider from "@mui/material/Divider";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from 'next/router';
-import nookies from 'nookies';
 //Images
 import OrderImg from "@/assests/order.png";
 import UserImg from "@/assests/user.png";
@@ -31,75 +29,73 @@ import Search from "@/assests/search.png";
 import User from "@/assests/user-1.png";
 //Icons
 import { IoMdMenu } from "react-icons/io";
+//Redux
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { selectMenu } from "@/reduxToolkit/selectedMenuSlice";
 //Styles
 import Styles from "@/styles/menu.module.css";
-import { redirect } from "next/dist/server/api-utils";
-import { cookies } from "next/headers";
-
 
 const pages = [
   {
     page: "Home",
-    path: "/home"
+    path: "/home",
   },
   {
     page: "Contact",
-    path: "/contact"
+    path: "/contact",
   },
   {
     page: "About",
-    path: "/about"
+    path: "/about",
   },
   {
     page: "Signup",
-    path: "/"
+    path: "/",
   },
 ];
 const settings = [
   {
     icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
     text: "Manage My Account",
-    path: "/profile"
+    path: "/profile",
   },
   {
     icon: <Image src={OrderImg} width={25} height={25} alt="order-icon" />,
     text: "My Order",
-    path: "/profile"
+    path: "/profile",
   },
   {
     icon: <Image src={CancelImg} width={25} height={25} alt="cancel-icon" />,
     text: "My Cancellations",
-    path: "/profile"
+    path: "/profile",
   },
   {
     icon: <Image src={ReviewsImg} width={25} height={25} alt="reviews-icon" />,
     text: "My Reviews",
-    path: "/profile"
+    path: "/profile",
   },
-  
+
   {
     icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
     text: "Logout",
-    path: "/login"
+    path: "/login",
   },
 ];
 
 function AccountMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [menuSelected, setMenuSelected] = React.useState('')
   // const [showClearIcon, setShowClearIcon] = React.useState(false);
 
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setShowClearIcon(event.target.value === "" ? false : true);
   // };
 
-  const router = useRouter();
-  const {status} = useSession()
-  const {data: session} = useSession()
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+  const activeMenu = useAppSelector((state) => state.headerMenu.menuItem);
 
-  console.log("login check:", session)
-
+  console.log("login check:", session);
 
   const handleClick = () => {
     console.log("clicked the clear icon...");
@@ -122,14 +118,14 @@ function AccountMenu() {
     setAnchorElUser(null);
   };
 
-  const handleLogout = async() => {
-    await signOut()
+  const handleLogout = async () => {
+    await signOut();
     // router.push(path);
-  }
+  };
 
   const selectedMenu = (menu: string) => {
-    setMenuSelected(menu)
-  }
+    dispatch(selectMenu(menu));
+  };
 
   return (
     <AppBar position="static" sx={{ background: "#fff" }}>
@@ -169,12 +165,12 @@ function AccountMenu() {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               sx={{
-                display: { xs: "flex", md: "none", lg: 'none', xl: 'none' },
+                display: { xs: "flex", md: "none", lg: "none", xl: "none" },
               }}
             >
               <IoMdMenu />
             </IconButton>
-            <Menu 
+            <Menu
               id={Styles.menuAppbar}
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -223,11 +219,11 @@ function AccountMenu() {
                   display: "block",
                   fontFamily: "Poppins, sans-serif",
                   textTransform: "capitalize",
-                  borderBottom: '1px solid #ccc',
-                  borderColor: menuSelected === page.page ? '#ccc' : '#fff',
-                  '&:hover': {
-                    borderColor: '#ccc'
-                  }
+                  borderBottom: "1px solid #ccc",
+                  borderColor: activeMenu === page.page ? "#ccc" : "#fff",
+                  "&:hover": {
+                    borderColor: "#ccc",
+                  },
                 }}
                 href={page.path}
               >
@@ -246,23 +242,34 @@ function AccountMenu() {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end" onClick={handleClick}>
-                      <Image src={Search} alt="search-icon" width={20} height={20} />
+                      <Image
+                        src={Search}
+                        alt="search-icon"
+                        width={20}
+                        height={20}
+                      />
                     </InputAdornment>
                   ),
                 }}
               />
             </FormControl>
-            {
-              session &&
+            {session && (
               <>
-              <div className={Styles.notifiImages}>
-                <Image src={Heart} alt="favourite-icon" width={18} height={18} />
-                <Image src={Cart} alt="cart" width={20} height={20} />
-              </div><Tooltip title="Open settings">
+                <div className={Styles.notifiImages}>
+                  <Image
+                    src={Heart}
+                    alt="favourite-icon"
+                    width={18}
+                    height={18}
+                  />
+                  <Image src={Cart} alt="cart" width={20} height={20} />
+                </div>
+                <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Image src={User} alt="cart" width={20} height={20} />
                   </IconButton>
-                </Tooltip><Menu
+                </Tooltip>
+                <Menu
                   sx={{ mt: "45px" }}
                   id={Styles.menuAppbar}
                   anchorEl={anchorElUser}
@@ -286,12 +293,13 @@ function AccountMenu() {
                       <Link href={setting?.path}>
                         <Typography sx={{ textAlign: "center" }}>
                           {setting.text}
-                        </Typography></Link>
+                        </Typography>
+                      </Link>
                     </MenuItem>
                   ))}
                 </Menu>
-                </>
-            }
+              </>
+            )}
           </Box>
         </Toolbar>
       </Container>

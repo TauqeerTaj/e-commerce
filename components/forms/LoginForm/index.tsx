@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import  {signIn} from "next-auth/react";
 //Material UI Imports
 import Typography from "@mui/material/Typography";
