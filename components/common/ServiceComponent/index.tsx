@@ -1,10 +1,6 @@
 import Image from "next/image";
 import Grid from "@mui/material/Grid2";
 import { Box, Typography } from "@mui/material";
-//Images
-// import DeliveryImg from "@/assests/icon-delivery.png";
-// import CustomerService from "@/assests/Icon-Customer service.png";
-// import Secure from "@/assests/Icon-secure.png";
 //Interface
 import { ServiceData } from "@/constant/servicesInterface";
 //Styles
@@ -12,7 +8,7 @@ import Styles from "@/styles/serviceSection.module.css";
 
 interface ServiceProps {
   services: Array<ServiceData>;
-  border: boolean;
+  border?: boolean;
 }
 
 const ServiceComponent: React.FC<ServiceProps> = ({ services, border }) => {

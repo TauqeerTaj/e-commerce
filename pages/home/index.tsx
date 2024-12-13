@@ -21,7 +21,11 @@ import {
   ourProducts,
 } from "@/constant/sliderContent";
 
-const Home = ({ services }: ServiceData) => {
+interface ServiceProps {
+  services: Array<ServiceData>;
+}
+
+const Home: React.FC<ServiceProps> = ({ services }) => {
   console.log("servicess:", services);
   return (
     <>
@@ -115,7 +119,7 @@ const Home = ({ services }: ServiceData) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<ServiceData> = async () => {
+export const getStaticProps: GetStaticProps<ServiceProps> = async () => {
   try {
     const response = await axios.get("http://localhost:3000/services.json");
     return {

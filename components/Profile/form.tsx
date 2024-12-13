@@ -37,7 +37,7 @@ function Form() {
     ) {
       setPasswordMatch(false);
     }
-  }, [profileData.confirmPassword]);
+  }, [profileData.confirmPassword, profileData.newPassword]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfileData({

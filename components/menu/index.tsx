@@ -208,27 +208,27 @@ function AccountMenu() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page.page}
-                onClick={() => selectedMenu(page.page)}
-                sx={{
-                  my: 2,
-                  mx: 3,
-                  pb: 0,
-                  color: "#000",
-                  display: "block",
-                  fontFamily: "Poppins, sans-serif",
-                  textTransform: "capitalize",
-                  borderBottom: "1px solid #ccc",
-                  borderColor: activeMenu === page.page ? "#ccc" : "#fff",
-                  "&:hover": {
-                    borderColor: "#ccc",
-                  },
-                }}
-                href={page.path}
-              >
-                {page.page}
-              </Button>
+              <Link href={page.path} key={page.page}>
+                <Button
+                  onClick={() => selectedMenu(page.page)}
+                  sx={{
+                    my: 2,
+                    mx: 3,
+                    pb: 0,
+                    color: "#000",
+                    display: "block",
+                    fontFamily: "Poppins, sans-serif",
+                    textTransform: "capitalize",
+                    borderBottom: "1px solid #ccc",
+                    borderColor: activeMenu === page.page ? "#ccc" : "#fff",
+                    "&:hover": {
+                      borderColor: "#ccc",
+                    },
+                  }}
+                >
+                  {page.page}
+                </Button>
+              </Link>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>

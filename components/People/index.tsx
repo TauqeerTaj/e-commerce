@@ -16,7 +16,7 @@ const People: React.FC<ListPeople> = ({ peopleList }) => {
     dots: true,
     infinite: true,
     arrows: false,
-    autoplay: false,
+    autoplay: true,
     autoplaySpeed: 3000,
     speed: 500,
     slidesToShow: 3,

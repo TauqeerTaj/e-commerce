@@ -28,7 +28,7 @@ function TopSection() {
           <Image
             src={bannerImage}
             alt="banner"
-            style={{ width: "-webkit-fill-available", height: "450px" }}
+            style={{ width: "-webkit-fill-available" }}
           />
         </Grid>
       </Grid>

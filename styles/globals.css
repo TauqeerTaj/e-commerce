@@ -45,24 +45,39 @@ a {
   width: 250px !important;
 }
 
-.searchInput input::placeholder{
+.searchInput input::placeholder {
   font-size: 14px;
 }
 
 .slick-arrow {
-  position:absolute!important;
-  top:-50px!important;
+  position: absolute !important;
+  top: -50px !important;
 }
-.slick-prev{
-  right:100px!important;
-  left: auto!important;
+.slick-prev {
+  right: 100px !important;
+  left: auto !important;
 }
-.slick-prev::before{
-  content: url('../assests/left-arrow.png')!important
+.slick-prev::before {
+  content: url("../assests/left-arrow.png") !important;
 }
-.slick-next{
-  right:50px!important
+.slick-next {
+  right: 50px !important;
 }
-.slick-next::before{
-  content: url('../assests/right-arrow.png')!important
+.slick-next::before {
+  content: url("../assests/right-arrow.png") !important;
+}
+.slick-dots li.slick-active button:before {
+  color: #db4444 !important;
+  border: 5px solid #ccc;
+  border-radius: 50%;
+}
+.slick-dots li button:before {
+  font-size: 15px !important;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  width: 18px !important;
+  height: 18px !important;
+}
+.slick-dots li button:hover:before {
+  color: #db4444 !important;
 }

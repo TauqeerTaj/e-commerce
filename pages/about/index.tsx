@@ -11,12 +11,16 @@ import { ServiceData } from "@/constant/servicesInterface";
 import { PeopleInterface } from "@/constant/peopleInterface";
 
 interface PropsInterface {
-  services: ServiceData;
-  people: PeopleInterface;
+  services: ServiceData[];
+  people: PeopleInterface[];
+  commonServices: ServiceData[];
 }
 
-const About: React.FC<PropsInterface> = ({ services, people }) => {
-  console.log("services:", services, people);
+const About: React.FC<PropsInterface> = ({
+  services,
+  people,
+  commonServices,
+}) => {
   return (
     <Box px={3} mt={4}>
       <BreadCrumbs
@@ -42,6 +46,10 @@ const About: React.FC<PropsInterface> = ({ services, people }) => {
       <Box mt={4}>
         <People peopleList={people} />
       </Box>
+      {/* Service Section */}
+      <Box mt={4}>
+        <ServiceComponent services={commonServices} border={false} />
+      </Box>
     </Box>
   );
 };
@@ -52,10 +60,14 @@ export const getStaticProps: GetStaticProps<PropsInterface> = async () => {
       "http://localhost:3000/aboutServices.json"
     );
     const peopleResponse = await axios.get("http://localhost:3000/people.json");
+    const commonServices = await axios.get(
+      "http://localhost:3000/services.json"
+    );
     return {
       props: {
         services: servicesResponse.data,
         people: peopleResponse.data,
+        commonServices: commonServices.data,
       },
     };
   } catch (error) {
@@ -65,6 +77,7 @@ export const getStaticProps: GetStaticProps<PropsInterface> = async () => {
       props: {
         services: [],
         people: [],
+        commonServices: [],
       },
     };
   }

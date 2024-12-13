@@ -12,14 +12,14 @@ const PeopleCard: React.FC<CardInterface> = ({ cardData }) => {
     <Box component="div" className="peopleCard" sx={{ padding: 2 }}>
       <Box
         component="div"
-        sx={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
+        sx={{ backgroundColor: "#f5f5f5", textAlign: "center", paddingTop: 2 }}
       >
         <Image
           src={cardData?.image}
           alt="person"
           width={0}
           height={0}
-          style={{ width: "auto", height: "auto" }}
+          style={{ width: "auto", height: "auto", margin: "auto" }}
         />
       </Box>
       <Box component="div" sx={{ fontWeight: "bold", fontSize: 18, mt: 3 }}>
