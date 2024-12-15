@@ -5,6 +5,10 @@ import { Box, Button } from "@mui/material";
 import Image from "next/image";
 //Interface
 import { SliderContentList, SliderTypes } from "@/constant/sliderInterface";
+//Images
+import Rating from "@/assests/rating.png";
+import Heart from "@/assests/heart.png";
+import View from "@/assests/view.png";
 //Styles
 import Styles from "@/styles/slider.module.css";
 
@@ -16,7 +20,7 @@ const SliderComponent: React.FC<SliderContentList> = ({
     dots: false,
     infinite: true,
     arrows: setting?.arrows,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     speed: 500,
     slidesToShow: 4,
@@ -48,110 +52,152 @@ const SliderComponent: React.FC<SliderContentList> = ({
       },
     ],
   };
+  const rows = 4;
+  const itemsPerRow = Math.ceil(sliderCard.length / rows);
+
+  const splitRows = [];
+  for (let i = 0; i < rows; i++) {
+    splitRows.push(sliderCard.slice(i * itemsPerRow, (i + 1) * itemsPerRow));
+  }
   return (
     <Box p={3} className={Styles.mainSlider}>
       <Slider {...settings}>
-        {sliderCard.map((data: SliderTypes) => (
-          <>
-            <Box className={Styles.productItem} key={data.productHeading}>
-              <Box
-                sx={{
-                  backgroundColor: "#F5F5F5",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "50px 5px",
-                  position: "relative",
-                }}
-              >
-                <Image src={data.image as HTMLImageElement} alt="product" />
-                {data.discount && (
-                  <Box className={Styles.discountOffer}>{data.discount}</Box>
-                )}
-                <Box className={Styles.productIcon}>
-                  <Image
-                    src={data.favouriteIcon as HTMLImageElement}
-                    alt="product-icon"
-                    width={40}
-                    height={40}
-                  />
-                  <Image
-                    src={data.viewIcon as HTMLImageElement}
-                    alt="product-icon"
-                    width={40}
-                    height={40}
-                  />
-                </Box>
-                <Box className={Styles.addToCart}>Add To Cart</Box>
-              </Box>
-              <Box className={Styles.productHeading}>{data.productHeading}</Box>
-              <Box className={Styles.productPrice}>
-                {data.productPrice} {data.priceOff}
-              </Box>
-              <Box className={Styles.productRating}>
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <Image
-                    src={data.rating as HTMLImageElement}
-                    alt="rating"
-                    key={item}
-                    style={{ marginRight: 5 }}
-                  />
+        {setting.rows === "double"
+          ? splitRows.map((row, rowIndex) => (
+              <Box key={rowIndex}>
+                {row.map((data) => (
+                  <Box
+                    className={Styles.productItem}
+                    key={data.productHeading}
+                    mb={5}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: "#F5F5F5",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "50px 5px",
+                        marginBottom: "20px",
+                        position: "relative",
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`data:image/png;base64,${data.image as string}`}
+                        alt="product"
+                        className={Styles.sliderImg}
+                      />
+                      {data.discount && (
+                        <Box className={Styles.discountOffer}>
+                          {data.discount}
+                        </Box>
+                      )}
+                      <Box className={Styles.productIcon}>
+                        <Box className={Styles.multiImg}>
+                          <Image
+                            src={Heart}
+                            alt="favourite-icon"
+                            width={40}
+                            height={40}
+                            layout="responsive"
+                          />
+                        </Box>
+                        <Box className={Styles.img}>
+                          <Image
+                            src={View}
+                            alt="View-icon"
+                            width={40}
+                            height={40}
+                            layout="responsive"
+                          />
+                        </Box>
+                      </Box>
+                      <Box className={Styles.addToCart}>Add To Cart</Box>
+                    </Box>
+                    <Box className={Styles.productHeading}>
+                      {data.productHeading}
+                    </Box>
+                    <Box className={Styles.productPrice}>
+                      {data.productPrice} <s>{data.priceOff}</s>
+                    </Box>
+                    <Box className={Styles.productRating}>
+                      {[1, 2, 3, 4, 5].map((item) => (
+                        <Image
+                          src={Rating}
+                          alt="rating"
+                          key={item}
+                          style={{ marginRight: 5 }}
+                        />
+                      ))}
+                    </Box>
+                  </Box>
                 ))}
               </Box>
-            </Box>
-            {setting.rows === "double" && (
-              <Box className={Styles.productItem} key={data.productHeading}>
+            ))
+          : sliderCard.map((data: SliderTypes) => (
+              <>
                 <Box
-                  sx={{
-                    backgroundColor: "#F5F5F5",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "50px 5px",
-                    position: "relative",
-                    marginTop: 5,
-                  }}
+                  className={Styles.productItem}
+                  key={data.productHeading}
+                  mb={5}
                 >
-                  <Image src={data.image as HTMLImageElement} alt="product" />
-                  {data.discount && (
-                    <Box className={Styles.discountOffer}>{data.discount}</Box>
-                  )}
-                  <Box className={Styles.productIcon}>
-                    <Image
-                      src={data.favouriteIcon as HTMLImageElement}
-                      alt="product-icon"
-                      width={40}
-                      height={40}
+                  <Box
+                    sx={{
+                      backgroundColor: "#F5F5F5",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "50px 5px",
+                      position: "relative",
+                    }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`data:image/png;base64,${data.image as string}`}
+                      alt="product"
+                      className={Styles.sliderImg}
                     />
-                    <Image
-                      src={data.viewIcon as HTMLImageElement}
-                      alt="product-icon"
-                      width={40}
-                      height={40}
-                    />
+                    {data.discount && (
+                      <Box className={Styles.discountOffer}>
+                        {data.discount}
+                      </Box>
+                    )}
+                    <Box className={Styles.productIcon}>
+                      <Image
+                        src={Heart}
+                        alt="favourite-icon"
+                        width={40}
+                        height={40}
+                      />
+                      <Image
+                        src={View}
+                        alt="View-icon"
+                        width={40}
+                        height={40}
+                      />
+                    </Box>
+                    <Box className={Styles.addToCart}>Add To Cart</Box>
                   </Box>
-                  <Box className={Styles.addToCart}>Add To Cart</Box>
+                  <Box className={Styles.productHeading}>
+                    {data.productHeading}
+                  </Box>
+                  <Box className={Styles.productPrice}>
+                    {data.productPrice} <s>{data.priceOff}</s>
+                  </Box>
+                  <Box className={Styles.productRating}>
+                    {[1, 2, 3, 4, 5].map((item) => (
+                      <Image
+                        src={Rating}
+                        alt="rating"
+                        key={item}
+                        style={{ marginRight: 5 }}
+                      />
+                    ))}
+                  </Box>
                 </Box>
-                <Box className={Styles.productHeading}>
-                  {data.productHeading}
-                </Box>
-                <Box className={Styles.productPrice}>
-                  {data.productPrice} {data.priceOff}
-                </Box>
-                <Box className={Styles.productRating}>
-                  {[1, 2, 3, 4, 5].map((item) => (
-                    <Image
-                      src={data.rating as HTMLImageElement}
-                      alt="rating"
-                      key={item}
-                      style={{ marginRight: 5 }}
-                    />
-                  ))}
-                </Box>
-              </Box>
-            )}
-          </>
-        ))}
+              </>
+            ))}
       </Slider>
       {setting.button === "small" ? (
         <Button className={Styles.viewButtonSmall}>View All</Button>

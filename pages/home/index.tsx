@@ -21,12 +21,26 @@ import {
   ourProducts,
 } from "@/constant/sliderContent";
 
-interface ServiceProps {
-  services: Array<ServiceData>;
+interface FlashData {
+  _id: string;
+  discount: string;
+  image: string;
+  priceOff: string;
+  productHeading: string;
+  productPrice: string;
 }
 
-const Home: React.FC<ServiceProps> = ({ services }) => {
-  console.log("servicess:", services);
+interface ServiceProps {
+  services: Array<ServiceData>;
+  flashSalesList: Array<FlashData>;
+  productList: Array<FlashData>;
+}
+
+const Home: React.FC<ServiceProps> = ({
+  services,
+  flashSalesList,
+  productList,
+}) => {
   return (
     <>
       <Box sx={{ mx: 3 }}>
@@ -51,7 +65,7 @@ const Home: React.FC<ServiceProps> = ({ services }) => {
           <Grid size={12} textAlign="center">
             <SliderComponent
               setting={sliderCard.setting}
-              sliderCard={sliderCard.content}
+              sliderCard={flashSalesList}
             />
           </Grid>
         </Grid>
@@ -100,7 +114,7 @@ const Home: React.FC<ServiceProps> = ({ services }) => {
         >
           <SliderComponent
             setting={ourProducts.setting}
-            sliderCard={ourProducts.content}
+            sliderCard={productList}
           />
         </Grid>
         {/* New Arrival */}
@@ -121,10 +135,20 @@ const Home: React.FC<ServiceProps> = ({ services }) => {
 
 export const getStaticProps: GetStaticProps<ServiceProps> = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/services.json");
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/services.json`
+    );
+    const flashSalesList = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/flashSales`
+    );
+    const productList = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/products`
+    );
     return {
       props: {
         services: response.data,
+        flashSalesList: flashSalesList.data.flashProducts,
+        productList: productList.data.products,
       },
     };
   } catch (error) {
@@ -133,6 +157,8 @@ export const getStaticProps: GetStaticProps<ServiceProps> = async () => {
     return {
       props: {
         services: [],
+        flashSalesList: [],
+        productList: [],
       },
     };
   }
