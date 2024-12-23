@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 //Material UI
 import Grid from "@mui/material/Grid2";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 //Components
 import ImageView from "@/components/detail_Image_View/ImageView";
+//Image
+import RatingStart from "@/assests/rating.png";
 
 interface Params extends ParsedUrlQuery {
   productId: string;
@@ -19,6 +22,7 @@ interface FlashData {
     priceOff: string;
     productHeading: string;
     productPrice: string;
+    rating: string;
     detailImages: {
       front: string;
       back: string;
@@ -29,14 +33,52 @@ interface FlashData {
 }
 
 const ProductDetails: React.FC<FlashData> = ({ product }) => {
+  const [selectedImage, setSelectedImage] = useState(
+    product.detailImages.front
+  );
+
+  const selectImageHandler = (image: string) => {
+    setSelectedImage(image);
+  };
+
   return (
     <Box px={3} mt={4}>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 12, md: 2, lg: 2, xl: 2 }}>
-          <ImageView product={product} />
+          <ImageView
+            product={product}
+            selectImageHandler={selectImageHandler}
+          />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 5, lg: 5, xl: 5 }}></Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 5, lg: 5, xl: 5 }}></Grid>
+        <Grid size={{ xs: 12, sm: 12, md: 5, lg: 5, xl: 5 }}>
+          <ImageView
+            product={{
+              ...product,
+              detailImages: {
+                selectedImage,
+              },
+            }}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 12, md: 5, lg: 5, xl: 5 }}>
+          <Typography variant="h6" fontWeight="bold">
+            {product.productHeading}
+          </Typography>
+          <Box>
+            {Array(product.rating)
+              .fill("")
+              .map((_, index) => (
+                <Image
+                  src={RatingStart}
+                  key={index}
+                  width={15}
+                  height={15}
+                  alt="rating"
+                  style={{ marginRight: 3 }}
+                />
+              ))}
+          </Box>
+        </Grid>
       </Grid>
     </Box>
   );

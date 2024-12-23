@@ -4,9 +4,21 @@
   margin-bottom: 20px;
   padding: 10px;
   cursor: pointer;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .view img {
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+.ShowProduct {
+  height: 100%;
+}
+
+.ShowProduct img {
+  width: 100%;
+  height: 500px;
 }
