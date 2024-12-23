@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Button } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 //Interface
 import { SliderContentList, SliderTypes } from "@/constant/sliderInterface";
 //Images
@@ -16,6 +17,7 @@ const SliderComponent: React.FC<SliderContentList> = ({
   sliderCard,
   setting,
 }) => {
+  const router = useRouter();
   const settings = {
     dots: false,
     infinite: true,
@@ -59,6 +61,14 @@ const SliderComponent: React.FC<SliderContentList> = ({
   for (let i = 0; i < rows; i++) {
     splitRows.push(sliderCard.slice(i * itemsPerRow, (i + 1) * itemsPerRow));
   }
+
+  const ShowDetailPage = (id: string) => {
+    router.push({
+      pathname: "/productDetails/[productId]",
+      query: { productId: id },
+    });
+  };
+
   return (
     <Box p={3} className={Styles.mainSlider}>
       <Slider {...settings}>
@@ -110,6 +120,7 @@ const SliderComponent: React.FC<SliderContentList> = ({
                             width={40}
                             height={40}
                             layout="responsive"
+                            onClick={() => ShowDetailPage(data._id)}
                           />
                         </Box>
                       </Box>
@@ -175,6 +186,7 @@ const SliderComponent: React.FC<SliderContentList> = ({
                         alt="View-icon"
                         width={40}
                         height={40}
+                        onClick={() => ShowDetailPage(data._id)}
                       />
                     </Box>
                     <Box className={Styles.addToCart}>Add To Cart</Box>

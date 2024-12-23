@@ -74,7 +74,11 @@ export default function ContactForm() {
               <Button
                 variant="contained"
                 color="error"
-                sx={{ textTransform: "capitalize", width: 200, height: 50 }}
+                sx={{
+                  textTransform: "capitalize",
+                  width: 200,
+                  height: 50,
+                }}
                 type="submit"
               >
                 Send Message

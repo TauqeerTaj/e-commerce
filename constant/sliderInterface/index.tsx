@@ -10,6 +10,7 @@ export interface SliderContentList {
 }
 
 export interface SliderTypes {
+  _id: string;
   image: unknown;
   discount: string;
   favouriteIcon?: unknown;
