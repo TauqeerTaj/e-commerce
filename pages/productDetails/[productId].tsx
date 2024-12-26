@@ -1,38 +1,21 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 //Material UI
 import Grid from "@mui/material/Grid2";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 //Components
 import ImageView from "@/components/detail_Image_View/ImageView";
-//Image
-import RatingStart from "@/assests/rating.png";
+import ProductInfo from "@/components/detail_Image_View/ProductInfo";
+//Interface
+import { DetailProduct } from "@/constant/detailProduct";
 
 interface Params extends ParsedUrlQuery {
   productId: string;
 }
-interface FlashData {
-  product: {
-    _id: string;
-    discount: string;
-    image: string;
-    priceOff: string;
-    productHeading: string;
-    productPrice: string;
-    rating: string;
-    detailImages: {
-      front: string;
-      back: string;
-      left: string;
-      right: string;
-    };
-  };
-}
 
-const ProductDetails: React.FC<FlashData> = ({ product }) => {
+const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState(
     product.detailImages.front
   );
@@ -61,23 +44,7 @@ const ProductDetails: React.FC<FlashData> = ({ product }) => {
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 12, md: 5, lg: 5, xl: 5 }}>
-          <Typography variant="h6" fontWeight="bold">
-            {product.productHeading}
-          </Typography>
-          <Box>
-            {Array(product.rating)
-              .fill("")
-              .map((_, index) => (
-                <Image
-                  src={RatingStart}
-                  key={index}
-                  width={15}
-                  height={15}
-                  alt="rating"
-                  style={{ marginRight: 3 }}
-                />
-              ))}
-          </Box>
+          <ProductInfo product={product} />
         </Grid>
       </Grid>
     </Box>
