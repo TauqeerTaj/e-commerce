@@ -127,10 +127,14 @@
   padding: 3px 5px;
   height: 40px;
   width: 9%;
+  cursor: pointer;
 }
 
 .delivery {
   border: 1px solid #828282;
-  display: inline-block;
-  height: 100%;
+  padding: 10px;
+}
+
+.detailSlider button {
+  display: none !important;
 }

@@ -4,12 +4,19 @@ import React, { useState } from "react";
 import { Box, Typography, Divider, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+//axios
+import axios from "axios";
+//Components
+import LoadingComponent from "@/components/LoadingBar";
 //Images
 import RatingStart from "@/assests/rating.png";
 import Heart from "@/assests/heart.png";
 import Return from "@/assests/Icon-return.png";
 //Interface
 import { DetailProduct } from "@/constant/detailProduct";
+//Toast
+import { ToastContainer, toast } from "react-toastify";
 //Styles
 import Styles from "@/styles/imageView.module.css";
 
@@ -17,8 +24,10 @@ const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
   const [selectedColour, setSelectedColour] = useState(product.colour);
   const [productSize, setProductSize] = useState("");
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   const sizes = ["XS", "S", "M", "L", "XL"];
+  const { data: session } = useSession();
 
   const colourHandler = (colour: string) => {
     setSelectedColour(colour);
@@ -38,9 +47,33 @@ const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
     }
   };
 
+  const wishlistHandler = async () => {
+    setLoading(true);
+    const wishlistProduct = {
+      userId: (session?.user as { id: string })?.id,
+      productId: product._id,
+      colour: product.colour,
+      productSize,
+      count,
+    };
+    try {
+      const result = await axios.post("/api/wishList", wishlistProduct);
+      setLoading(false);
+      toast.success(result.data.message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errResp = error?.response?.data.message;
+        setLoading(false);
+        toast.error(errResp);
+      }
+    }
+  };
+
   return (
-    <Box>
-      <Grid container spacing={0}>
+    <Box height="100%">
+      {loading && <LoadingComponent />}
+      <ToastContainer />
+      <Grid container spacing={0} height="100%">
         <Grid size={12}>
           <Typography variant="h6" fontWeight="bold">
             {product.productHeading}
@@ -123,7 +156,7 @@ const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
               <Button onClick={() => incrementCount()}>+</Button>
             </Box>
             <Button className={Styles.buyButton}>Buy Now</Button>
-            <Box className={Styles.like}>
+            <Box className={Styles.like} onClick={() => wishlistHandler()}>
               <Image src={Heart} width={20} height={20} alt="like" />
             </Box>
           </Box>
@@ -136,7 +169,7 @@ const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
               </Grid>
               <Grid size={10}>
                 <Typography>Return Delivery</Typography>
-                <Typography>Free 30 Days Delivery Returns. Details</Typography>
+                <Typography>Free 30 Days Delivery Returns</Typography>
               </Grid>
             </Grid>
           </Box>

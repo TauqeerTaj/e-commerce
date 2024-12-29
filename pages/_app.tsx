@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
 //Fontawesome
 import "@/constant/fontawsome";
 //components

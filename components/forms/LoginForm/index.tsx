@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react'
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import  {signIn} from "next-auth/react";
+import { signIn } from "next-auth/react";
 //Material UI Imports
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -15,10 +15,9 @@ import FormControl from "@mui/material/FormControl";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 //Components
-import LoadingComponent from '@/components/LoadingBar';
+import LoadingComponent from "@/components/LoadingBar";
 //Styles
-import Styles from '@/styles/authForm.module.css'
-
+import Styles from "@/styles/authForm.module.css";
 
 const LoginForm = () => {
   const [loading, setLoading] = React.useState(false);
@@ -39,30 +38,39 @@ const LoginForm = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: user.email,
-        password: user.password
-      })
-      
-      console.log('result:', result)
-      setLoading(false)
-      if(result?.error) toast.error(result.error);
-      if(result?.ok) router.push("/home")
+        password: user.password,
+      });
+
+      console.log("result:", result);
+      setLoading(false);
+      if (result?.error) toast.error(result.error);
+      if (result?.ok) router.push("/home");
     } catch (error) {
-      setLoading(false)
-      console.log('signIn error:', error)
-      toast.success('sorry');
+      setLoading(false);
+      console.log("signIn error:", error);
+      toast.error("sorry");
     }
-  }
+  };
   return (
     <>
       <Box textAlign="center">
-        {loading && <LoadingComponent/>}
+        {loading && <LoadingComponent />}
         <ToastContainer />
-        <FormControl component="form" onSubmit={submitHandler} className={Styles.form} sx={{md: { translate: "0px 150px" }, lg: { translate: "0px 150px" }, xl: { translate: "0px 150px" }}}>
+        <FormControl
+          component="form"
+          onSubmit={submitHandler}
+          className={Styles.form}
+          sx={{
+            md: { translate: "0px 150px" },
+            lg: { translate: "0px 150px" },
+            xl: { translate: "0px 150px" },
+          }}
+        >
           <Typography
-          className={Styles.heading}
+            className={Styles.heading}
             variant="h4"
             style={{ textAlign: "left", marginBottom: 10 }}
           >
@@ -79,14 +87,18 @@ const LoginForm = () => {
               id="email"
               label="Email or Phone Number"
               variant="standard"
-              name='email'
+              name="email"
               value={user.email}
               onChange={handleChange}
             />
-            <TextField id="password" label="Password" variant="standard"
-              name='password'
+            <TextField
+              id="password"
+              label="Password"
+              variant="standard"
+              name="password"
               value={user.password}
-              onChange={handleChange}/>
+              onChange={handleChange}
+            />
             <Stack
               direction="row"
               spacing={5}
@@ -95,7 +107,7 @@ const LoginForm = () => {
               <Button
                 variant="contained"
                 color="error"
-                type='submit'
+                type="submit"
                 sx={{ textTransform: "capitalize", p: 2, width: 120 }}
                 disabled={!user.email || !user.password}
               >

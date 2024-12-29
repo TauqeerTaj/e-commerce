@@ -4,11 +4,16 @@
   background-size: cover;
   color: #fff;
 }
+
+.notifiImages {
+  display: flex;
+}
+
 .notifiImages img {
-  margin: 0px 10px 0px 10px;
+  margin: 0px 10px;
   cursor: pointer;
 }
-.notifiImages img:first-child {
-  margin-left: 20px;
+.notifiImages div:first-child img {
+  margin-left: 20px !important;
   margin-right: 5px;
 }

@@ -93,7 +93,7 @@ function AccountMenu() {
 
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
-  const activeMenu = useAppSelector((state) => state.headerMenu.menuItem);
+  const activeMenu = useAppSelector((state) => state?.headerMenu.menuItem);
 
   console.log("login check:", session);
 
@@ -256,13 +256,17 @@ function AccountMenu() {
             {session && (
               <>
                 <div className={Styles.notifiImages}>
-                  <Image
-                    src={Heart}
-                    alt="favourite-icon"
-                    width={18}
-                    height={18}
-                  />
-                  <Image src={Cart} alt="cart" width={20} height={20} />
+                  <Box>
+                    <Image
+                      src={Heart}
+                      alt="favourite-icon"
+                      width={18}
+                      height={18}
+                    />
+                  </Box>
+                  <Box>
+                    <Image src={Cart} alt="cart" width={20} height={20} />
+                  </Box>
                 </div>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
