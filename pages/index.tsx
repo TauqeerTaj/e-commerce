@@ -1,15 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
-//material UI
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
-import BackgroundImage from "@/assests/auth-bg.png";
-//components
-import Signup from "@/components/forms/signup";
-//styles
-import Styles from "@/styles/authForm.module.css";
+import { getSession } from "next-auth/react";
+import { GetServerSidePropsContext } from "next";
 //Toast
 import { ToastContainer } from "react-toastify";
+//Components
+import Login from "./login";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Main() {
@@ -21,23 +16,27 @@ export default function Main() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box component="section" className={Styles.signup}>
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
-            <Box>
-              <Image
-                src={BackgroundImage}
-                alt="background-image"
-                className={Styles.bgImage}
-              />
-            </Box>
-          </Grid>
-          <Grid size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
-            <Signup />
-          </Grid>
-        </Grid>
-        <ToastContainer />
-      </Box>
+      <Login />
+      <ToastContainer />
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    redirect: {
+      destination: "/home",
+      permanent: false,
+    },
+  };
 }

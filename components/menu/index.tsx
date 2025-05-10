@@ -17,6 +17,16 @@ import Divider from "@mui/material/Divider";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+//Redux
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { selectMenu } from "@/reduxToolkit/selectedMenuSlice";
+import { wishListProductHandler } from "@/reduxToolkit/wishListSlice";
+//Axios
+import axios from "axios";
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+//Components
+import LoadingComponent from "@/components/LoadingBar";
 //Images
 import OrderImg from "@/assests/order.png";
 import UserImg from "@/assests/user.png";
@@ -29,9 +39,6 @@ import Search from "@/assests/search.png";
 import User from "@/assests/user-1.png";
 //Icons
 import { IoMdMenu } from "react-icons/io";
-//Redux
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { selectMenu } from "@/reduxToolkit/selectedMenuSlice";
 //Styles
 import Styles from "@/styles/menu.module.css";
 
@@ -50,9 +57,18 @@ const pages = [
   },
   {
     page: "Signup",
-    path: "/",
+    path: "/signup",
   },
 ];
+const handleLogout = async () => {
+  await signOut({
+    callbackUrl: "/login",
+    redirect: true,
+  });
+  localStorage.clear();
+  sessionStorage.clear();
+};
+
 const settings = [
   {
     icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
@@ -79,12 +95,14 @@ const settings = [
     icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
     text: "Logout",
     path: "/login",
+    action: handleLogout,
   },
 ];
 
 function AccountMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   // const [showClearIcon, setShowClearIcon] = React.useState(false);
 
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,11 +112,38 @@ function AccountMenu() {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const activeMenu = useAppSelector((state) => state?.headerMenu.menuItem);
+  const wishListProducts = useAppSelector(
+    (state) => state?.wishList.wishListProducts
+  );
 
-  console.log("login check:", session);
+  console.log("login check:", (session?.user as { id: string })?.id);
+
+  React.useEffect(() => {
+    const fetchWishList = async () => {
+      const data = await getWishList();
+      dispatch(wishListProductHandler(data?.data.products));
+    };
+    fetchWishList();
+  }, [session]);
 
   const handleClick = () => {
     console.log("clicked the clear icon...");
+  };
+
+  const getWishList = async () => {
+    try {
+      const result = await axios.get(
+        `/api/wishList?userId=${(session?.user as { id: string })?.id}`
+      );
+      setLoading(false);
+      return result;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errResp = error?.response?.data.message;
+        setLoading(false);
+        toast.error(errResp);
+      }
+    }
   };
 
   const handleOpenNavMenu = (
@@ -118,17 +163,14 @@ function AccountMenu() {
     setAnchorElUser(null);
   };
 
-  const handleLogout = async () => {
-    await signOut();
-    // router.push(path);
-  };
-
   const selectedMenu = (menu: string) => {
     dispatch(selectMenu(menu));
   };
 
   return (
     <AppBar position="static" sx={{ background: "#fff" }}>
+      {loading && <LoadingComponent />}
+      <ToastContainer />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
@@ -256,13 +298,18 @@ function AccountMenu() {
             {session && (
               <>
                 <div className={Styles.notifiImages}>
-                  <Box>
-                    <Image
-                      src={Heart}
-                      alt="favourite-icon"
-                      width={18}
-                      height={18}
-                    />
+                  <Box sx={{ position: "relative" }}>
+                    <Link href="/wishList">
+                      <Image
+                        src={Heart}
+                        alt="favourite-icon"
+                        width={18}
+                        height={18}
+                      />
+                      <Typography className={Styles.wishListNotifi}>
+                        {wishListProducts.length}
+                      </Typography>
+                    </Link>
                   </Box>
                   <Box>
                     <Image src={Cart} alt="cart" width={20} height={20} />
@@ -290,7 +337,10 @@ function AccountMenu() {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting, i) => (
-                    <MenuItem key={i} onClick={handleCloseUserMenu}>
+                    <MenuItem
+                      key={i}
+                      onClick={setting.action || handleCloseUserMenu}
+                    >
                       <Typography style={{ marginRight: 10 }}>
                         {setting.icon}
                       </Typography>

@@ -4,6 +4,7 @@ import React from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 //axios
 import axios from "axios";
 
@@ -31,6 +32,7 @@ import Styles from "@/styles/authForm.module.css";
 
 const SignupForm = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({
     name: "",
@@ -65,6 +67,10 @@ const SignupForm = () => {
         toast.error(errResp);
       }
     }
+  };
+
+  const loginAlert = () => {
+    toast.warning("You are already logged in");
   };
   return (
     <>
@@ -145,16 +151,24 @@ const SignupForm = () => {
             </Button>
             <Typography variant="body1" textAlign="center">
               Already have account?{" "}
-              <Link
-                href="/login"
+              <span
                 style={{
                   borderBottom: "1px solid #000",
                   paddingBottom: 3,
                   marginLeft: 5,
+                  cursor: "pointer",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (session?.user) {
+                    loginAlert();
+                  } else {
+                    router.push("/login");
+                  }
                 }}
               >
                 Log in
-              </Link>
+              </span>
             </Typography>
           </Stack>
         </FormControl>

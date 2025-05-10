@@ -7,6 +7,7 @@ export interface SliderContentList {
     rows: string;
   };
   sliderCard: SliderTypes[];
+  trash?: boolean;
 }
 
 export interface SliderTypes {

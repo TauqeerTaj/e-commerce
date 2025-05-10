@@ -1,8 +1,8 @@
-interface Review {
+export interface Review {
   text: string;
 }
 
-interface Product {
+export interface Product {
   _id: string;
   discount: string;
   image: string;

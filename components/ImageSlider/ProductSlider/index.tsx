@@ -10,12 +10,14 @@ import { SliderContentList, SliderTypes } from "@/constant/sliderInterface";
 import Rating from "@/assests/rating.png";
 import Heart from "@/assests/heart.png";
 import View from "@/assests/view.png";
+import Trash from "@/assests/delete.png";
 //Styles
 import Styles from "@/styles/slider.module.css";
 
 const SliderComponent: React.FC<SliderContentList> = ({
   sliderCard,
   setting,
+  trash,
 }) => {
   const router = useRouter();
   const settings = {
@@ -175,19 +177,30 @@ const SliderComponent: React.FC<SliderContentList> = ({
                       </Box>
                     )}
                     <Box className={Styles.productIcon}>
-                      <Image
-                        src={Heart}
-                        alt="favourite-icon"
-                        width={40}
-                        height={40}
-                      />
-                      <Image
-                        src={View}
-                        alt="View-icon"
-                        width={40}
-                        height={40}
-                        onClick={() => ShowDetailPage(data._id)}
-                      />
+                      {trash ? (
+                        <Image
+                          src={Trash}
+                          alt="trash-icon"
+                          width={40}
+                          height={40}
+                        />
+                      ) : (
+                        <>
+                          <Image
+                            src={Heart}
+                            alt="favourite-icon"
+                            width={40}
+                            height={40}
+                          />
+                          <Image
+                            src={View}
+                            alt="View-icon"
+                            width={40}
+                            height={40}
+                            onClick={() => ShowDetailPage(data._id)}
+                          />
+                        </>
+                      )}
                     </Box>
                     <Box className={Styles.addToCart}>Add To Cart</Box>
                   </Box>

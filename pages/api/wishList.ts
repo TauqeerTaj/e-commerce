@@ -41,4 +41,18 @@ export default async function handler(
       client.close();
     }
   }
+  try {
+    const { userId } = req.query;
+    // Fetch wishList products from the database
+    const products = await db
+      .collection("wishList")
+      .find({ userId: userId })
+      .toArray();
+
+    res.status(200).json({ message: "wishList Products", products });
+    client.close();
+  } catch (error) {
+    console.error("Error fetching wishList Products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }
