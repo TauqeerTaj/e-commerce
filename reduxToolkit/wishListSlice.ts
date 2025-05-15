@@ -8,8 +8,13 @@ export interface PayLoadType {
   productSize: string;
   userId: string;
   _id: string;
+  productPrice: string;
+  productHeading: string;
+  image: string;
+  discount?: string;
+  priceOff?: string;
 }
-interface WishListState {
+export interface WishListState {
   wishListProducts: PayLoadType[];
 }
 
@@ -22,7 +27,7 @@ export const wishListSlice = createSlice({
   initialState,
   reducers: {
     wishListProductHandler: (state, action: PayloadAction<PayLoadType[]>) => {
-      action.payload.forEach((newProduct) => {
+      action?.payload?.forEach((newProduct) => {
         if (
           !state.wishListProducts.some(
             (product) => product._id === newProduct._id

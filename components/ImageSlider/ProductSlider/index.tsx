@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 //Interface
 import { SliderContentList, SliderTypes } from "@/constant/sliderInterface";
+import { PayLoadType } from "@/reduxToolkit/wishListSlice";
 //Images
 import Rating from "@/assests/rating.png";
 import Heart from "@/assests/heart.png";
@@ -77,10 +78,10 @@ const SliderComponent: React.FC<SliderContentList> = ({
         {setting.rows === "double"
           ? splitRows.map((row, rowIndex) => (
               <Box key={rowIndex}>
-                {row.map((data) => (
+                {row.map((data: SliderTypes | PayLoadType) => (
                   <Box
                     className={Styles.productItem}
-                    key={data.productHeading}
+                    key={data?.productHeading}
                     mb={5}
                   >
                     <Box
@@ -148,7 +149,7 @@ const SliderComponent: React.FC<SliderContentList> = ({
                 ))}
               </Box>
             ))
-          : sliderCard.map((data: SliderTypes) => (
+          : sliderCard.map((data: SliderTypes | PayLoadType) => (
               <>
                 <Box
                   className={Styles.productItem}
@@ -226,8 +227,10 @@ const SliderComponent: React.FC<SliderContentList> = ({
       </Slider>
       {setting.button === "small" ? (
         <Button className={Styles.viewButtonSmall}>View All</Button>
-      ) : (
+      ) : setting.button === "large" ? (
         <Button className={Styles.viewButton}>View All Products</Button>
+      ) : (
+        ""
       )}
     </Box>
   );

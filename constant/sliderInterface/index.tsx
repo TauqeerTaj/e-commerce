@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { PayLoadType } from "@/reduxToolkit/wishListSlice";
 
 export interface SliderContentList {
   setting: {
@@ -6,7 +7,7 @@ export interface SliderContentList {
     button: string;
     rows: string;
   };
-  sliderCard: SliderTypes[];
+  sliderCard: SliderTypes[] | PayLoadType[];
   trash?: boolean;
 }
 

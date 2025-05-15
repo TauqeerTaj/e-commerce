@@ -52,9 +52,13 @@ const ProductDetails: React.FC<DetailProduct> = ({ product }) => {
     const wishlistProduct = {
       userId: (session?.user as { id: string })?.id,
       productId: product._id,
-      colour: product.colour,
+      colour: selectedColour,
+      image: product.image,
+      productPrice: product.productPrice,
       productSize,
       count,
+      productHeading: product.productHeading,
+      discount: product.discount,
     };
     try {
       const result = await axios.post("/api/wishList", wishlistProduct);

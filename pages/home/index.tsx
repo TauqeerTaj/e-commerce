@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next";
+import dynamic from "next/dynamic";
 import Grid from "@mui/material/Grid2";
 import { Box, Divider } from "@mui/material";
 import axios from "axios";
@@ -11,6 +12,11 @@ import CategorySlider from "@/components/ImageSlider/CategorySlider";
 import CategoryBanner from "@/components/CategoryBanner";
 import NewArrival from "@/components/NewArrival";
 import ServiceComponent from "@/components/common/ServiceComponent";
+//Dynamic load Components
+const Slider = dynamic(() => import("@/components/ImageSlider/ProductSlider"), {
+  loading: () => <p>Products Loading...</p>,
+  ssr: true,
+});
 //Interface
 import { ServiceData } from "@/constant/servicesInterface";
 //Constant
@@ -63,10 +69,7 @@ const Home: React.FC<ServiceProps> = ({
             <SliderHeader identity="Today's" heading="Flash Sales" />
           </Grid>
           <Grid size={12} textAlign="center">
-            <SliderComponent
-              setting={sliderCard.setting}
-              sliderCard={flashSalesList}
-            />
+            <Slider setting={sliderCard.setting} sliderCard={flashSalesList} />
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />

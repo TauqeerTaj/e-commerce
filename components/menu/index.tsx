@@ -103,21 +103,13 @@ function AccountMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  // const [showClearIcon, setShowClearIcon] = React.useState(false);
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setShowClearIcon(event.target.value === "" ? false : true);
-  // };
 
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const activeMenu = useAppSelector((state) => state?.headerMenu.menuItem);
   const wishListProducts = useAppSelector(
-    (state) => state?.wishList.wishListProducts
+    (state) => state?.wishList?.wishListProducts
   );
-
-  console.log("login check:", (session?.user as { id: string })?.id);
-
   React.useEffect(() => {
     const fetchWishList = async () => {
       const data = await getWishList();
@@ -173,7 +165,6 @@ function AccountMenu() {
       <ToastContainer />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -306,9 +297,11 @@ function AccountMenu() {
                         width={18}
                         height={18}
                       />
-                      <Typography className={Styles.wishListNotifi}>
-                        {wishListProducts.length}
-                      </Typography>
+                      {wishListProducts.length > 0 && (
+                        <Typography className={Styles.wishListNotifi}>
+                          {wishListProducts.length}
+                        </Typography>
+                      )}
                     </Link>
                   </Box>
                   <Box>

@@ -7,11 +7,14 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
+     "target": "es6",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
+    "types": ["jest"],
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }

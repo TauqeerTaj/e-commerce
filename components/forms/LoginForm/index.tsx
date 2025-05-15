@@ -12,8 +12,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 //Toast
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 //Components
 import LoadingComponent from "@/components/LoadingBar";
 //Styles

@@ -14,7 +14,17 @@ export default async function handler(
   if (req.method === "POST") {
     const data = req.body;
 
-    const { userId, productId, colour, productSize, count } = data;
+    const {
+      userId,
+      productId,
+      colour,
+      productSize,
+      count,
+      image,
+      productPrice,
+      productHeading,
+      discount,
+    } = data;
 
     const findProduct = await db.collection("wishList").findOne({
       productId,
@@ -34,6 +44,10 @@ export default async function handler(
         colour,
         productSize,
         count,
+        image,
+        productPrice,
+        productHeading,
+        discount,
       });
       res
         .status(201)

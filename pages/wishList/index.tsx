@@ -7,12 +7,11 @@ import { GetServerSideProps } from "next";
 import WishListCard from "@/components/wishList/WishListCard";
 //Interfaces
 import { PayLoadType } from "@/reduxToolkit/wishListSlice";
-import { Product } from "@/constant/detailProduct";
 
 export default function WishList({
   wishListProducts,
 }: {
-  wishListProducts: Product[];
+  wishListProducts: PayLoadType[];
 }) {
   return (
     <>
@@ -39,15 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const result = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/wishList?userId=${userId}`
     );
-    const productIds = result?.data?.products.map(
-      (product: PayLoadType) => product.productId
-    );
-    const products = await axios.get(
-      `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/api/wishListProducts?productIds=${JSON.stringify(productIds)}`
-    );
-    const wishListProducts = products?.data?.products || [];
+    const wishListProducts = result?.data?.products || [];
     return {
       props: {
         wishListProducts,
